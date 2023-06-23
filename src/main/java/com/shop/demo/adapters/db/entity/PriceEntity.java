@@ -1,23 +1,29 @@
 package com.shop.demo.adapters.db.entity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "PRICES")
 @IdClass(PriceId.class)
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder(toBuilder = true)
 @Data
-public class Price {
+public class PriceEntity {
     @Id
     @Column(name = "PRICE_LIST")
     private Integer priceList;
@@ -43,5 +49,5 @@ public class Price {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BRAND_ID", referencedColumnName = "ID")
-    private Brand brand;
+    private BrandEntity brand;
 }
