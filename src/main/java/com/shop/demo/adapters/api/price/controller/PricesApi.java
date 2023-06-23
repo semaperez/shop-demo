@@ -19,8 +19,8 @@ public interface PricesApi {
     @Operation(summary = "This operation returned the list prices by params ")
     @GetMapping
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Record list returned"),
-            @ApiResponse(responseCode = "400", description = "Bad request body")
+            @ApiResponse(responseCode = "200", description = "Prices list returned"),
+            @ApiResponse(responseCode = "400", description = "Bad request param")
     })
     ResponseEntity<List<PriceDto>> getPricesList(@RequestParam("startDate") LocalDateTime startDate, @RequestParam("productId") Integer productId,
                                                  @RequestParam("brandId") Integer brandId);
@@ -28,8 +28,7 @@ public interface PricesApi {
     @Operation(summary = "This operation returned all prices in the database")
     @GetMapping("/all")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Record list returned"),
-            @ApiResponse(responseCode = "400", description = "Bad request body")
+            @ApiResponse(responseCode = "200", description = "Prices list returned")
     })
     ResponseEntity<List<PriceDto>> getPricesList();
 
