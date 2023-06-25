@@ -8,8 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
+import java.util.Comparator;
 
 @Service
 @RequiredArgsConstructor
@@ -17,11 +16,14 @@ public class PricesServiceImpl implements PricePort {
     private final JpaPriceRepository jpaPriceRepository;
     private final PriceEntityMapper priceEntityMapper;
     @Override
-    public List<Price> getPricesList(LocalDateTime startDate, Integer productId, Integer brandId) {
-        return jpaPriceRepository.findByStartDateGreaterThanEqualAndProductIdAndBrandId(startDate, productId, brandId)
+    public Price getPrice(LocalDateTime rangeDate, Integer productId, Integer brandId) {
+        return jpaPriceRepository.findByStartDateLessThanEqualAndEndDateGreaterThanEqualAndProductIdAndBrandId(rangeDate, rangeDate, productId,
+                        brandId)
                 .map(list -> list.stream()
                         .map(priceEntityMapper::toDomain)
-                        .toList())
-                .orElse(Collections.emptyList());
+                        .sorted(Comparator.comparingInt(Price::getPriority).reversed())
+                        .findFirst()
+                        .orElse(null))
+                .orElse(null);
     }
 }

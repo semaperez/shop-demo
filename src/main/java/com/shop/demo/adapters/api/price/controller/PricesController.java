@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -16,10 +15,12 @@ public class PricesController implements PricesApi{
     private final PriceUseCases priceUseCases;
     private final PriceMapper priceMapper;
     @Override
-    public ResponseEntity<List<PriceDto>> getPricesList(LocalDateTime startDate, Integer productId, Integer brandId) {
-        return ResponseEntity.ok(priceUseCases.getPricesList(startDate, productId, brandId)
-                .stream()
-                .map(priceMapper::toDto)
-                .toList());
+    public ResponseEntity<PriceDto> getPrice(LocalDateTime rangeDate, Integer productId, Integer brandId) {
+        PriceDto priceDto = priceMapper.toDto(priceUseCases.getPrice(rangeDate, productId, brandId));
+        if (priceDto == null){
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(priceDto);
+        }
     }
 }

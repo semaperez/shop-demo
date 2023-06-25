@@ -7,14 +7,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 public class PricesService implements PriceUseCases {
     private final PricePort pricePort;
     @Override
-    public List<Price> getPricesList(LocalDateTime startDate, Integer productId, Integer brandId) {
-        return pricePort.getPricesList(startDate, productId, brandId);
+    public Price getPrice(LocalDateTime rangeDate, Integer productId, Integer brandId) {
+        return pricePort.getPrice(rangeDate, productId, brandId);
     }
 }

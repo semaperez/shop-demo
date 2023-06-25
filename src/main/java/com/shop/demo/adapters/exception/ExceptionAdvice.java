@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class ExceptionAdvice {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorDto> handleException(HttpServletRequest request, Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(buildError(request, HttpStatus.BAD_REQUEST,
+        return ResponseEntity.internalServerError().body(buildError(request, HttpStatus.INTERNAL_SERVER_ERROR,
                 "Internal server error: " + e.getMessage()));
     }
     @ExceptionHandler(MissingServletRequestParameterException.class)

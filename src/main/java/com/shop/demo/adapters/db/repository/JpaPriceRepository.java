@@ -11,5 +11,6 @@ import java.util.Optional;
 
 @Repository
 public interface JpaPriceRepository extends JpaRepository<PriceEntity, PriceId> {
-    Optional<List<PriceEntity>> findByStartDateGreaterThanEqualAndProductIdAndBrandId(LocalDateTime startDate, Integer productId, Integer brandId);
+    Optional<List<PriceEntity>> findByStartDateLessThanEqualAndEndDateGreaterThanEqualAndProductIdAndBrandId
+            (LocalDateTime startDate, LocalDateTime endDate, Integer productId, Integer brandId);
 }

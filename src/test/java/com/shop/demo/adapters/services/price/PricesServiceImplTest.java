@@ -31,13 +31,13 @@ class PricesServiceImplTest {
     private PriceEntityMapper priceEntityMapper;
 
     @Test
-    void given_startDateAndProductIdAndBrandId_when_getPricesList_listIsReturned(){
+    void given_startDateAndProductIdAndBrandId_when_getPrice_listIsReturned(){
         List<PriceEntity> prices = Collections.singletonList(PriceEntity.builder().build());
-        when(jpaPriceRepository.findByStartDateGreaterThanEqualAndProductIdAndBrandId(any(),any(),any())).thenReturn(Optional.of(prices));
+        when(jpaPriceRepository.findByStartDateLessThanEqualAndEndDateGreaterThanEqualAndProductIdAndBrandId(any(),any(),any(),any()))
+                .thenReturn(Optional.of(prices));
         when(priceEntityMapper.toDomain(any())).thenReturn(Price.builder().build());
-        List<Price> response = sut.getPricesList(LocalDateTime.now(),1,2);
+        Price response = sut.getPrice(LocalDateTime.now(),1,2);
         assertNotNull(response);
-        assertFalse(response.isEmpty());
     }
 
 }

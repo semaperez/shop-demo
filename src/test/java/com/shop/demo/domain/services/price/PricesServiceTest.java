@@ -25,12 +25,10 @@ class PricesServiceTest {
     private PricePort pricePort;
 
     @Test
-    void given_startDateAndProductIdAndBrandId_when_getPricesList_listIsReturned(){
-        List<Price> prices = Collections.singletonList(Price.builder().build());
-        when(pricePort.getPricesList(any(),any(),any())).thenReturn(prices);
-        List<Price> response = sut.getPricesList(LocalDateTime.now(),1,2);
+    void given_startDateAndProductIdAndBrandId_when_getPrice_listIsReturned(){
+        when(pricePort.getPrice(any(),any(),any())).thenReturn(Price.builder().build());
+        Price response = sut.getPrice(LocalDateTime.now(),1,2);
         assertNotNull(response);
-        assertFalse(response.isEmpty());
     }
 
 }

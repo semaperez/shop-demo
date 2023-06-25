@@ -12,10 +12,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -31,13 +29,13 @@ class PricesControllerTest {
     private PriceMapper priceMapper;
 
     @Test
-    void given_startDateAndProductIdAndBrandId_when_getPricesList_responseIsReturned(){
-        List<Price> prices = Collections.singletonList(Price.builder().build());
-        when(priceUseCases.getPricesList(any(),any(), any())).thenReturn(prices);
+    void given_startDateAndProductIdAndBrandId_when_getPrice_responseIsReturned(){
+        PriceDto priceDto = PriceDto.builder().build();
+        when(priceUseCases.getPrice(any(),any(), any())).thenReturn(Price.builder().build());
         when(priceMapper.toDto(any())).thenReturn(PriceDto.builder().build());
-        ResponseEntity<List<PriceDto>> response = sut.getPricesList(LocalDateTime.now(),1,2);
+        ResponseEntity<PriceDto> response = sut.getPrice(LocalDateTime.now(),1,2);
         assertNotNull(response);
-        assertFalse(response.getBody().isEmpty());
+        assertEquals(priceDto, response.getBody());
     }
 
 
