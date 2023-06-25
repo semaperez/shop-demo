@@ -7,8 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface JpaPriceRepository extends JpaRepository<PriceEntity, PriceId> {
-    List<PriceEntity> findByStartDateGreaterThanEqualAndProductIdAndBrandId(LocalDateTime startDate, Integer productId, Integer brandId);
+    Optional<List<PriceEntity>> findByStartDateGreaterThanEqualAndProductIdAndBrandId(LocalDateTime startDate, Integer productId, Integer brandId);
 }

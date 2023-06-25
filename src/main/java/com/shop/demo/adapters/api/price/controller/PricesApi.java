@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +23,9 @@ public interface PricesApi {
             @ApiResponse(responseCode = "200", description = "Prices list returned"),
             @ApiResponse(responseCode = "400", description = "Bad request param")
     })
-    ResponseEntity<List<PriceDto>> getPricesList(@RequestParam("startDate") LocalDateTime startDate, @RequestParam("productId") Integer productId,
-                                                 @RequestParam("brandId") Integer brandId);
+    ResponseEntity<List<PriceDto>> getPricesList(@RequestParam("startDate") @Valid LocalDateTime startDate,
+                                                 @RequestParam("productId") @Valid Integer productId,
+                                                 @RequestParam("brandId") @Valid Integer brandId);
 
     @Operation(summary = "This operation returned all prices in the database")
     @GetMapping("/all")
