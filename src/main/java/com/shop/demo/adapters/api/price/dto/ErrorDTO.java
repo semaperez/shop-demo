@@ -7,7 +7,8 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-public class ErrorDTO {
+public class ErrorDto {
+    String url;
     Integer error;
     String responseType;
     String errorMessage;

@@ -13,22 +13,11 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class PricesController implements PricesApi{
-
     private final PriceUseCases priceUseCases;
-
     private final PriceMapper priceMapper;
-
     @Override
     public ResponseEntity<List<PriceDto>> getPricesList(LocalDateTime startDate, Integer productId, Integer brandId) {
         return ResponseEntity.ok(priceUseCases.getPricesList(startDate, productId, brandId)
-                .stream()
-                .map(priceMapper::toDto)
-                .toList());
-    }
-
-    @Override
-    public ResponseEntity<List<PriceDto>> getPricesList() {
-        return ResponseEntity.ok(priceUseCases.getPricesList()
                 .stream()
                 .map(priceMapper::toDto)
                 .toList());

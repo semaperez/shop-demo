@@ -7,5 +7,4 @@ import java.util.List;
 
 public interface PricePort {
     List<Price> getPricesList(LocalDateTime startDate, Integer productId, Integer brandId);
-    List<Price> getPricesList();
 }

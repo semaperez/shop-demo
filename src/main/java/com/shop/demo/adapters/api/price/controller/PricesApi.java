@@ -27,11 +27,4 @@ public interface PricesApi {
                                                  @RequestParam("productId") @Valid Integer productId,
                                                  @RequestParam("brandId") @Valid Integer brandId);
 
-    @Operation(summary = "This operation returned all prices in the database")
-    @GetMapping("/all")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Prices list returned")
-    })
-    ResponseEntity<List<PriceDto>> getPricesList();
-
 }

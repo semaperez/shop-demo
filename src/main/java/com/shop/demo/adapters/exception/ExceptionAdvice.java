@@ -1,7 +1,8 @@
 package com.shop.demo.adapters.exception;
 
-import com.shop.demo.adapters.api.price.dto.ErrorDTO;
-import jakarta.xml.bind.ValidationException;
+import com.shop.demo.adapters.api.price.dto.ErrorDto;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -13,21 +14,23 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class ExceptionAdvice {
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorDTO> handleException(Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(buildError(HttpStatus.BAD_REQUEST,
+    public ResponseEntity<ErrorDto> handleException(HttpServletRequest request, Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(buildError(request, HttpStatus.BAD_REQUEST,
                 "Internal server error: " + e.getMessage()));
     }
     @ExceptionHandler(MissingServletRequestParameterException.class)
-    public ResponseEntity<ErrorDTO> handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
-      return ResponseEntity.badRequest().body(buildError(HttpStatus.BAD_REQUEST,"Missing request parameter: " + e.getMessage()));
+    public ResponseEntity<ErrorDto> handleMissingServletRequestParameterException(HttpServletRequest request,
+                                                                                  MissingServletRequestParameterException e) {
+      return ResponseEntity.badRequest().body(buildError(request, HttpStatus.BAD_REQUEST,"Missing request parameter: " + e.getMessage()));
     }
     @ExceptionHandler(ValidationException.class)
-    public ResponseEntity<ErrorDTO> handleValidationException(ValidationException e) {
-        return ResponseEntity.badRequest().body(buildError(HttpStatus.BAD_REQUEST,"Validation error: " + e.getMessage()));
+    public ResponseEntity<ErrorDto> handleValidationException(HttpServletRequest request, ValidationException e) {
+        return ResponseEntity.badRequest().body(buildError(request, HttpStatus.BAD_REQUEST,"Validation error: " + e.getMessage()));
     }
 
-    private ErrorDTO buildError(HttpStatus status, String message){
-        return ErrorDTO.builder()
+    private ErrorDto buildError(HttpServletRequest request, HttpStatus status, String message){
+        return ErrorDto.builder()
+            .url(request.getRequestURI())
             .error(status.value())
             .responseType(status.name())
             .errorMessage(message)

@@ -12,16 +12,9 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class PricesService implements PriceUseCases {
-
     private final PricePort pricePort;
-
     @Override
     public List<Price> getPricesList(LocalDateTime startDate, Integer productId, Integer brandId) {
         return pricePort.getPricesList(startDate, productId, brandId);
-    }
-
-    @Override
-    public List<Price> getPricesList() {
-        return pricePort.getPricesList();
     }
 }
