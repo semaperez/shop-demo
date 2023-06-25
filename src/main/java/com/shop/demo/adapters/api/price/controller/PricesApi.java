@@ -22,7 +22,7 @@ public interface PricesApi {
             @ApiResponse(responseCode = "204", description = "No price found"),
             @ApiResponse(responseCode = "400", description = "Bad request param")
     })
-    ResponseEntity<PriceDto> getPrice(@RequestParam("startDate") LocalDateTime rangeDate,
+    ResponseEntity<PriceDto> getPrice(@RequestParam("rangeDate") LocalDateTime rangeDate,
                                                  @RequestParam("productId") Integer productId,
                                                  @RequestParam("brandId") Integer brandId);
 
