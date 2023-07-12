@@ -1,5 +1,6 @@
 package com.shop.demo.adapters.services.price;
 
+import com.shop.demo.adapters.db.entity.PriceEntity;
 import com.shop.demo.adapters.db.repository.JpaPriceRepository;
 import com.shop.demo.adapters.services.price.mapper.PriceEntityMapper;
 import com.shop.demo.domain.model.Price;
@@ -19,11 +20,10 @@ public class PricesServiceImpl implements PricePort {
     public Price getPrice(LocalDateTime rangeDate, Integer productId, Integer brandId) {
         return jpaPriceRepository.findByStartDateLessThanEqualAndEndDateGreaterThanEqualAndProductIdAndBrandId(rangeDate, rangeDate, productId,
                         brandId)
-                .map(list -> list.stream()
-                        .map(priceEntityMapper::toDomain)
-                        .sorted(Comparator.comparingInt(Price::getPriority).reversed())
-                        .findFirst()
-                        .orElse(null))
+                .flatMap(list -> list.stream()
+                        .max(Comparator.comparingInt(PriceEntity::getPriority))
+                        .map(priceEntityMapper::toDomain))
                 .orElse(null);
+        };
     }
 }
