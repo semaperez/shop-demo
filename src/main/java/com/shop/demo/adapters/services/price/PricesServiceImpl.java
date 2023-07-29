@@ -24,6 +24,5 @@ public class PricesServiceImpl implements PricePort {
                         .max(Comparator.comparingInt(PriceEntity::getPriority))
                         .map(priceEntityMapper::toDomain))
                 .orElse(null);
-        };
     }
 }
